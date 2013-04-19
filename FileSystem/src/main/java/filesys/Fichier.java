@@ -1,4 +1,6 @@
-package fileSystem;
+package filesys;
+
+import exceptions.*;
 
 /**
  * La class Fichier
@@ -8,12 +10,16 @@ package fileSystem;
  */
 public class Fichier extends FileSystem {
 	private int taille;
-
+	
 	/**
 	 * Constructeur des objets de la classe Fichier
+	 * @param nom
+	 * @param taille
+	 * @throws ToutesExceptions
 	 */
-	public Fichier(String nom, int taille) {
+	public Fichier(String nom, int taille) throws ToutesExceptions {
 		super(nom, "Fichier");
+		if(taille<0) throw new TailleFichierNegativeException();
 		setTaille(taille);
 	}
 
@@ -21,11 +27,6 @@ public class Fichier extends FileSystem {
 	 * Retourne la taille du fichier
 	 */
 	public int taille() {
-		return getTaille();
-	}
-
-	/** Get **/
-	public int getTaille() {
 		return this.taille;
 	}
 
