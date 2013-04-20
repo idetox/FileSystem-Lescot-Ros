@@ -1,4 +1,6 @@
-package fileSystem;
+package filesys;
+
+import exceptions.*;
 
 /**
  * FileSystem
@@ -9,19 +11,25 @@ package fileSystem;
 abstract class FileSystem {
 	private String nom;
 	private String type;
-
+	
 	/**
 	 * Constructeur des objets de la classe FileSystem
+	 * @param nom
+	 * @param type
+	 * @throws FileSystemNomException
 	 */
-	public FileSystem(String nom, String type) {
-		setNom(nom);
+	public FileSystem(String nom, String type) throws FileSystemNomException{
+		if(nom==null) throw new FileSystemNomException();
 		setType(type);
+		setNom(nom);
 	}
 
 	/**
 	 * Calcul la taille du FileSystem désigné
+	 * @return int
+	 * @throws TailleFichierNegativeException
 	 */
-	public abstract int taille();
+	public abstract int taille() throws TailleFichierNegativeException;
 	
 	/** Get **/
 	public String getNom() {
