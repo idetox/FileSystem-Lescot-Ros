@@ -6,22 +6,19 @@ import org.junit.*;
 import exceptions.*;
 
 public class RepertoireTest {
-	@Test
+	@Test (expected=FileSystemNomException.class)
 	public void testNom() throws FileSystemNomException {
-		String nom="abc";
+		String nom=null;
 		Repertoire doc = new Repertoire(nom);
-		assertEquals("abc",doc.getNom());
 	}
-	@Test
+	@Test (expected=FileSystemDejaExistantException.class)
 	public void testRepertoireMemeNom() throws ToutesExceptions{
 		Repertoire doc1 = new Repertoire("Pere");
 		Repertoire doc2 = new Repertoire("Fils");
 		Repertoire doc3 = new Repertoire("Fils");
 		
 		doc1.ajouterFileSystem(doc2);
-		if(doc3.getNom()!=doc2.getNom()) doc1.ajouterFileSystem(doc3);
-		
-		assertTrue(doc1.getNbFiles() == 1);
+		doc1.ajouterFileSystem(doc3);
 	}
 	@Test
 	public void testTailleAttendueRepertoire() throws ToutesExceptions{
@@ -36,17 +33,19 @@ public class RepertoireTest {
 		doc2.ajouterFileSystem(fic1);	// 			-- Sous-Document -- Fic1
 		doc2.ajouterFileSystem(fic2);	// 							 -- Fic2
 		
-		assertTrue(doc2.taille() == 55);
-		assertTrue(doc1.taille() == 100);
+		assertTrue(doc2.taille()==55);
+		assertTrue(doc1.taille()==100);
 	}
 	
-	@Test
+	@Test (expected=RepertoireAjouterALuiMemeException.class)
 	public void testRepAjouterLuiMeme() throws ToutesExceptions {
 		Repertoire A = new Repertoire("A");
+		Repertoire B = new Repertoire("B");
 		
-		A.ajouterFileSystem(A);	// L'exception gère cette erreur.
+		A.ajouterFileSystem(B);
+		A.ajouterFileSystem(A);	// A ne peut être dans A on tombe dans le cas de l'exception.
 	}
-	@Test
+	@Test (expected=RepertoireAjouterALuiMemeDansSousRepertoireException.class)
 	public void testRepSousRepLuiMeme() throws ToutesExceptions {
 		Repertoire A = new Repertoire("A");
 		Repertoire B = new Repertoire("B");
@@ -56,6 +55,6 @@ public class RepertoireTest {
 		A.ajouterFileSystem(B);	// A/B
 		B.ajouterFileSystem(C);	// A/B/C
 		C.ajouterFileSystem(D);	// A/B/C/D
-		D.ajouterFileSystem(A);	// A/B/C/D/A L'exception gère cette erreur.
+		D.ajouterFileSystem(A);	// A/B/C/D/A Impossible on tombe dans le cas de l'exception.
 	}
 }
