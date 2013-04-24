@@ -27,4 +27,10 @@ Exceptions:
 - TailleFichierNegativeException.java
 - ToutesExceptions.java
 
-Tests effectués avec succès. Passage aux exceptions sans problème.
+-- Version 1.0.1 --
+
+POM.xml mis à jour.
+
+-- Version 1.0.2 --
+
+Classes de tests mis à jour.
