@@ -19,13 +19,13 @@ public class FichierTest {
 		Assert.assertEquals(taille,fic1.taille());
 	}
 	
-	@Test
+	@Test (expected=FileSystemDejaExistantException.class)
 	public void testFichierMemeNom() throws ToutesExceptions {
 		Repertoire doc = new Repertoire("Document");
 		Fichier fic1 = new Fichier("Fic1", 15);
 		Fichier fic2 = new Fichier("Fic1", 30);
 		
-		assertTrue(doc.ajouterFileSystem(fic1));
-		assertFalse(doc.ajouterFileSystem(fic2));	// fic2 a le meme nom que fic1 donc on tombe dans le cas de l'exception.
+		doc.ajouterFileSystem(fic1);
+		doc.ajouterFileSystem(fic2);	// fic2 a le meme nom que fic1 donc on tombe dans le cas de l'exception.
 	}
 }
