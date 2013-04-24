@@ -19,7 +19,6 @@ public class Fichier extends FileSystem {
 	 */
 	public Fichier(String nom, int taille) throws ToutesExceptions {
 		super(nom, "Fichier");
-		if(taille<0) throw new TailleFichierNegativeException();
 		setTaille(taille);
 	}
 
